@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.concurrent.CompletableFuture;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HttpApiTest {
@@ -23,8 +28,15 @@ class HttpApiTest {
     }
 
     @Test
-    void plainRequestTest() {
-        // TODO
+    void plainRequestTest() throws IOException {
+        HttpRequest request = api.plainRequest("https://paste.csfriendlycorner.com/aTEXY3P");
+        HttpResponse<String> response = api.sendSync(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response == null) {
+            throw new IOException();
+        }
+
+        assertEquals("HELLO WORLD", response.body());
     }
 
     @Test
@@ -33,13 +45,15 @@ class HttpApiTest {
     }
 
     @Test
-    void sendSyncTest() {
-        // TODO
-    }
+    void sendSyncTest() throws IOException {
+        HttpRequest request = api.plainRequest("https://paste.csfriendlycorner.com/aTEXY3P");
+        HttpResponse<String> response = api.sendSync(request, HttpResponse.BodyHandlers.ofString());
 
-    @Test
-    void sendAsyncTest() {
-        // TODO
+        if (response == null) {
+            throw new IOException();
+        }
+
+        assertEquals("HELLO WORLD", response.body());
     }
 
 }
