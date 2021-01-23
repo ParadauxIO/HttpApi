@@ -1,7 +1,7 @@
 # HTTP API
-![Nexus](https://img.shields.io/nexus/r/io.paradaux.http/HttpApi?color=66b3b3&label=api-version&nexusVersion=3&server=https%3A%2F%2Frepo.paradaux.io)
-![Discord](https://img.shields.io/discord/583254829279739905?label=Support%20Discord%21)
-![Jenkins](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.paradaux.io%2Fjob%2FHttpApi%2F&label=jenkins%20build)
+[![Nexus](https://img.shields.io/nexus/r/io.paradaux.http/HttpApi?color=66b3b3&label=api-version&nexusVersion=3&server=https%3A%2F%2Frepo.paradaux.io)](https://repo.paradaux.io/#browse/browse:maven-releases)
+[![Discord](https://img.shields.io/discord/583254829279739905?label=Support%20Discord%21)](https://paradaux.io/discord)
+[![Jenkins](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.paradaux.io%2Fjob%2FHttpApi%2F&label=jenkins%20build)](https://ci.paradaux.io/job/HttpApi/)
 
 ## What is HttpApi?
 
