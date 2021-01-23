@@ -32,6 +32,76 @@ HttpApi isn't currently available in central, however you can find it in my repo
 </dependencies>
 ```
 
-# License
+## Usage
+
+This API is written to be used for performing basic, ritualistic HTTP Requests, intended for use within Discord bots or 
+Bukkit Plugins. As such, the large majority of the API is focussed on HTTP `GET`. More features will be added over time as needed, and as requested. 
+
+### Getting an instance of the API
+
+The API is designed to be a singleton, as such you need to create an instance of the api, which you can do one of several ways.
+
+#### Providing a logger
+
+The API expects a logger, if there isn't one provided it will create its own internally for debugging purposes.
+
+```java
+HttpApi api = new Logger(); // Logger created internally
+
+
+Logger logger = LoggerFactory.getLogger(getClass());
+HttpApi api = new HttpApi(logger) // Logger provided
+```
+
+#### Providing a HttpClient
+
+If you don't like the default settings of the HttpClient you are to provide your own by passing it in to the constructor.
+
+```java
+HttpClient client = HttpClient.newBuilder()
+        .version(Version.HTTP_2)
+        .followRedirects(Redirect.SAME_PROTOCOL)
+        .build();
+
+HttpApi api = new HttpApi(client);
+```
+
+There are also constructors for other variations of those two parameters, 
+i.e providing both a client and a logger, or no parameters.
+
+
+### Creating a simple HTTP Get request
+
+In order to `GET` you have to create a plainRequest
+
+```java
+HttpApi api = new HttpApi(logger);
+
+HttpRequest request = api.plainRequest("https://paste.csfriendlycorner.com/aTEXY3P");
+```
+
+HttpRequests are immutable, meaning they cannot be modified once they are built. You can build requests outside of the API and send them internally, if you so which, however that largely defeats the purpose of the API -- to give templated HTTP Requests
+
+### Sending Requests
+
+You have two options for sending requests, asynchronously and synchronously. These options are provided by the HttpApi#sendSync(HttpRequest, BodyHandler) and HttpApi#sendASync(HttpRequest, BodyHandler) the latter of which returns a Completeable Future containing the HttpResponse. 
+
+```java
+// Create the instance
+HttpApi api = new HttpApi(); 
+
+// Create the request
+HttpRequest request = api.plainRequest("https://paste.csfriendlycorner.com/aTEXY3P");
+
+// Send the request, and get the response (synchronously)
+HttpResponse<String> response = api.sendSync(request, HttpResponse.BodyHandlers.ofString());
+
+// Do something with the response body. 
+logger.info(response.body());
+```
+
+// TODO: Concurrency, JSON tutorials. 
+
+## License
 HttpApi © Rían Errity (Paradaux) 2021
 HttpApi is licensed under the MIT License, go wild. 
