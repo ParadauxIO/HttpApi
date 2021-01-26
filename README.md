@@ -19,7 +19,7 @@ HttpApi isn't currently available in central, however you can find it in my repo
 <repositories>
     <repository>
         <id>paradaux</id>
-        <url>https://repo.paradaux.io/repository/maven-releases/</url>
+        <url>https://repo.paradaux.io/releases</url>
     </repository>
 </repositories>
 
