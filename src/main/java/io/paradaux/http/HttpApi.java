@@ -65,6 +65,8 @@ public class HttpApi {
         this(LoggerFactory.getLogger(HttpApi.class));
     }
 
+    // CONSTRUCTORS
+    
     /**
      * Create an HTTP Api Instance provided the client.
      * */
@@ -94,73 +96,127 @@ public class HttpApi {
                 .build();
     }
 
+    // JSON REQUESTS
+    
     /**
      * Creates a default JSON request from a String URL
      * */
     @CheckReturnValue
     @Nullable
-    public HttpRequest jsonRequest(String url) {
-        return jsonRequest(URI.create(url));
+    public HttpRequest jsonRequest(String URL) {
+        return jsonRequest(URI.create(URL), null);
     }
 
     /**
-     * Creates a default JSON request from a URI
+     * Creates a default JSON request from a String URL and any additional, non-default headers.
      * */
     @CheckReturnValue
     @Nullable
-    public HttpRequest jsonRequest(URI uri) {
-        return HttpRequest.newBuilder()
+    public HttpRequest jsonRequest(String URL, String[] additionalHeaders) {
+        return jsonRequest(URI.create(URL), additionalHeaders);
+    }
+
+    /**
+     * Creates a default JSON request from a URI and any additional, non-default headers.
+     * */
+    @CheckReturnValue
+    @Nullable
+    public HttpRequest jsonRequest(URI uri, String[] additionalHeaders) {
+        HttpRequest.Builder builder = HttpRequest.newBuilder()
                 .uri(uri)
                 .timeout(DEFAULT_TIMEOUT)
                 .headers(JSON_HEADER)
                 .headers(DEFAULT_USERAGENT)
                 .headers(LANGUAGE_HEADER)
-                .GET()
-                .build();
+                .GET();
+
+        if (additionalHeaders != null) {
+            builder.headers(additionalHeaders);
+        }
+
+        return builder.build();
     }
 
+    // PLAIN REQUESTS
+    
     /**
      * Creates a default plain-text request from a String URL
      * */
     @CheckReturnValue
     @Nullable
-    public HttpRequest plainRequest(String url) {
-        return plainRequest(URI.create(url));
+    public HttpRequest plainRequest(String URL) {
+        return plainRequest(URI.create(URL), null);
     }
 
     /**
-     * Creates a default plain-text request from a URI
+     * Creates a default plain-text request from a String URL and any additional, non-default headers.
+     * */
+    @CheckReturnValue
+    @Nullable
+    public HttpRequest plainRequest(String URL, String[] additionalHeaders) {
+        return plainRequest(URI.create(URL), additionalHeaders);
+    }
+
+    /**
+     * Creates a default plain-text request from a URI and any additional, non-default headers.
      * */
     @CheckReturnValue
     @Nonnull
-    public HttpRequest plainRequest(URI uri) {
-        return HttpRequest.newBuilder()
+    public HttpRequest plainRequest(URI uri, String[] additionalHeaders) {
+        HttpRequest.Builder builder = HttpRequest.newBuilder()
                 .uri(uri)
                 .timeout(DEFAULT_TIMEOUT)
                 .headers(PLAINTEXT_HEADER)
                 .headers(DEFAULT_USERAGENT)
                 .headers(LANGUAGE_HEADER)
-                .GET()
-                .build();
+                .GET();
+
+        if (additionalHeaders != null) {
+            builder.headers(additionalHeaders);
+        }
+
+        return builder.build();
     }
 
+    // POST REQUESTS (BINARY)
+    
+    /** 
+     * Posts binary to the given URL, returns the response.
+     * */
     @CheckReturnValue
     @Nullable
-    public HttpRequest postBytes(String url, byte[] data) {
-        return postBytes(URI.create(url), data);
+    public HttpRequest postBytes(String URL, byte[] data) {
+        return postBytes(URI.create(URL), data, null);
     }
 
+    /**
+     * Posts binary to the given URL and any additional, non-default headers, returns the response. 
+     * */
     @CheckReturnValue
     @Nullable
-    public HttpRequest postBytes(URI uri, byte[] data) {
-        return HttpRequest.newBuilder()
+    public HttpRequest postBytes(String URL, byte[] data, String[] additionalHeaders) {
+        return postBytes(URI.create(URL), data, additionalHeaders);
+    }
+
+    /**
+     * Posts binary to the given URI and any additional, non-default headers, returns the response.
+     * */
+    @CheckReturnValue
+    @Nullable
+    public HttpRequest postBytes(URI uri, byte[] data, String[] additionalHeaders) {
+        HttpRequest.Builder builder = HttpRequest.newBuilder()
                 .uri(uri)
                 .timeout(DEFAULT_TIMEOUT)
                 .headers(PLAINTEXT_HEADER)
                 .headers(DEFAULT_USERAGENT)
                 .headers(LANGUAGE_HEADER)
-                .POST(HttpRequest.BodyPublishers.ofByteArray(data))
-                .build();
+                .POST(HttpRequest.BodyPublishers.ofByteArray(data));
+
+        if (additionalHeaders != null) {
+            builder.headers(additionalHeaders);
+        }
+
+        return builder.build();
     }
 
     /**
@@ -206,7 +262,5 @@ public class HttpApi {
         JOptionPane.showMessageDialog(new JPanel(), "This is an API. You cannot execute this JAR directly.", "Illegal Action",
                 JOptionPane.WARNING_MESSAGE);
     }
-
-
-
+    
 }
