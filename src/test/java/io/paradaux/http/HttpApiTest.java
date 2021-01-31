@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -102,5 +103,24 @@ class HttpApiTest {
             HttpResponse<String> response2 = http.sendSync(request2, HttpResponse.BodyHandlers.ofString());
             System.out.println(response2.body());
         }).join();
+    }
+
+    @Test
+    void postPlain() {
+        HttpApi http = new HttpApi(logger);
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("from", "");
+        map.put("to", "");
+        map.put("template", "verificationemail");
+        map.put("X-Mailgun-Variables", "{\"discord_tag\":\"test_discord_tag\", \"verification_code\": \"test_verfication_code\"}");
+
+        String[] headers = {"Authorization", "Basic XXXXXXXXXXXXXXXXX"};
+        String encodedMap = HttpApi.mapToUrlEncodedParameters(map);
+        HttpRequest request = http.postPlain("https://api.eu.mailgun.net/v3/Domain/messages?" + encodedMap, headers);
+        HttpResponse<String> response = http.sendSync(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println(encodedMap);
+        System.out.println(response.body());
     }
 }
