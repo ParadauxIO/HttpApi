@@ -34,11 +34,15 @@ import javax.annotation.Nullable;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * HttpApi is a Java 11 java.net.http wrapper for dealing with RESTful APIs with relative ease.
@@ -90,10 +94,12 @@ public class HttpApi {
     public HttpApi(Logger logger) {
         this.logger = logger;
 
+
         client = HttpClient.newBuilder()
                 .version(DEFAULT_HTTP_VERSION)
                 .followRedirects(DEFAULT_REDIRECT_POLICY)
                 .build();
+
     }
 
     // JSON REQUESTS
@@ -178,9 +184,50 @@ public class HttpApi {
         return builder.build();
     }
 
+    // POST REQUESTS (NO BODY)
+
+    /**
+     * Posts to the given URL, returns the response.
+     * */
+    @CheckReturnValue
+    @Nullable
+    public HttpRequest postPlain(String URL) {
+        return postPlain(URI.create(URL), null);
+    }
+
+    /**
+     * Posts to the given URL and any additional, non-default headers, returns the response.
+     * */
+    @CheckReturnValue
+    @Nullable
+    public HttpRequest postPlain(String URL, String[] additionalHeaders) {
+        return postPlain(URI.create(URL), additionalHeaders);
+    }
+
+    /**
+     * Posts to the given URI and any additional, non-default headers, returns the response.
+     * */
+    @CheckReturnValue
+    @Nullable
+    public HttpRequest postPlain(URI uri, String[] additionalHeaders) {
+        HttpRequest.Builder builder = HttpRequest.newBuilder()
+                .uri(uri)
+                .timeout(DEFAULT_TIMEOUT)
+                .headers(PLAINTEXT_HEADER)
+                .headers(DEFAULT_USERAGENT)
+                .headers(LANGUAGE_HEADER)
+                .POST(HttpRequest.BodyPublishers.noBody());
+
+        if (additionalHeaders != null) {
+            builder.headers(additionalHeaders);
+        }
+
+        return builder.build();
+    }
+
     // POST REQUESTS (BINARY)
-    
-    /** 
+
+    /**
      * Posts binary to the given URL, returns the response.
      * */
     @CheckReturnValue
