@@ -83,4 +83,24 @@ class HttpApiTest {
         assertEquals("HELLO WORLD", response.body());
     }
 
+    @Test
+    void getAndPostToImgur() {
+        HttpApi http = new HttpApi(logger);
+        HttpRequest request = http.plainRequest("https://api.wolframalpha.com/v1/simple?appid=DEMO&i=What+airplanes+are+flying+overhead%3F");
+        http.sendAsync(request, HttpResponse.BodyHandlers.ofByteArray()).thenAccept((response) -> {
+            byte[] bytes = response.body();
+            System.out.println(bytes.length);
+            try (FileOutputStream fos = new FileOutputStream("src/test/resources/img.png")) {
+                fos.write(bytes);
+            } catch (IOException exception) {
+                logger.error("An error occurred.");
+            }
+
+            String[] headers = {"Authorization", "Client-ID "};
+            HttpRequest request2 = http.postBytes("https://api.imgur.com/3/upload/", bytes, headers);
+
+            HttpResponse<String> response2 = http.sendSync(request2, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response2.body());
+        }).join();
+    }
 }
