@@ -73,6 +73,7 @@ public class HttpApi {
     
     /**
      * Create an HTTP Api Instance provided the client.
+     * @param client a client to override the default generated one with.
      * */
     public HttpApi(HttpClient client) {
         this.logger = LoggerFactory.getLogger(HttpApi.class);
@@ -81,6 +82,8 @@ public class HttpApi {
 
     /**
      * Create an HTTP Api Instance provided the client and a logger.
+     * @param client a client to ovveride the default generated one with.
+     * @param logger An instance of an SLF4J logger
      * */
     public HttpApi(HttpClient client, Logger logger) {
         this.client = client;
@@ -90,6 +93,7 @@ public class HttpApi {
     /**
      * Create an HTTP Api Instance provided a logger.
      * This is the preferred constructor.
+     * @param logger An instance of an SLF4J logger
      * */
     public HttpApi(Logger logger) {
         this.logger = logger;
@@ -106,6 +110,7 @@ public class HttpApi {
     
     /**
      * Creates a default JSON request from a String URL
+     * @param URL the url to send the request to.
      * */
     @CheckReturnValue
     @Nullable
@@ -115,6 +120,9 @@ public class HttpApi {
 
     /**
      * Creates a default JSON request from a String URL and any additional, non-default headers.
+     * @param URL the url to send the request to.
+     * @param additionalHeaders Any additional headers you would like attached.
+     *
      * */
     @CheckReturnValue
     @Nullable
@@ -124,6 +132,8 @@ public class HttpApi {
 
     /**
      * Creates a default JSON request from a URI and any additional, non-default headers.
+     * @param uri the URI to send the request to
+     * @param additionalHeaders Any additional headers you would like attached.
      * */
     @CheckReturnValue
     @Nullable
@@ -147,6 +157,7 @@ public class HttpApi {
     
     /**
      * Creates a default plain-text request from a String URL
+     * @parma the URI to send the request to.
      * */
     @CheckReturnValue
     @Nullable
@@ -156,6 +167,8 @@ public class HttpApi {
 
     /**
      * Creates a default plain-text request from a String URL and any additional, non-default headers.
+     * @param URL the URL to send the request to
+     * @param additionalHeaders Any additional headers you would like attached.
      * */
     @CheckReturnValue
     @Nullable
@@ -165,6 +178,8 @@ public class HttpApi {
 
     /**
      * Creates a default plain-text request from a URI and any additional, non-default headers.
+     * @param uri the URI to send the request to
+     * @param additionalHeaders Any additional headers you would like attached.
      * */
     @CheckReturnValue
     @Nonnull
@@ -188,6 +203,7 @@ public class HttpApi {
 
     /**
      * Posts to the given URL, returns the response.
+     * @param URL the URL to send the request to
      * */
     @CheckReturnValue
     @Nullable
@@ -197,6 +213,8 @@ public class HttpApi {
 
     /**
      * Posts to the given URL and any additional, non-default headers, returns the response.
+     * @param URL the URL to send the request to
+     * @param additionalHeaders Any additional headers you would like attached.
      * */
     @CheckReturnValue
     @Nullable
@@ -206,6 +224,8 @@ public class HttpApi {
 
     /**
      * Posts to the given URI and any additional, non-default headers, returns the response.
+     * @param uri The URI to send the request to
+     * @param additionalHeaders Any additional headers you would like attached.
      * */
     @CheckReturnValue
     @Nullable
@@ -229,6 +249,8 @@ public class HttpApi {
 
     /**
      * Posts binary to the given URL, returns the response.
+     * @param URL the URL to send the request to
+     * @param data A binary array containing the data you wish to POST
      * */
     @CheckReturnValue
     @Nullable
@@ -237,7 +259,10 @@ public class HttpApi {
     }
 
     /**
-     * Posts binary to the given URL and any additional, non-default headers, returns the response. 
+     * Posts binary to the given URL and any additional, non-default headers, returns the response.
+     * @param URL the URL to send the request to
+     * @param data A binary array containing the data you wish to POST
+     * @param additionalHeaders Any additional headers you would like attached.
      * */
     @CheckReturnValue
     @Nullable
@@ -247,6 +272,9 @@ public class HttpApi {
 
     /**
      * Posts binary to the given URI and any additional, non-default headers, returns the response.
+     * @param uri the URL to send the request to
+     * @param data A binary array containing the data you wish to POST
+     * @param additionalHeaders Any additional headers you would like attached.
      * */
     @CheckReturnValue
     @Nullable
