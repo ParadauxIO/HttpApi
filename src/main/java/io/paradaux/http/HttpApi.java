@@ -262,5 +262,13 @@ public class HttpApi {
         JOptionPane.showMessageDialog(new JPanel(), "This is an API. You cannot execute this JAR directly.", "Illegal Action",
                 JOptionPane.WARNING_MESSAGE);
     }
-    
+
+    /**
+     * Converts a Map<String, String> into a url-encoded form string.
+     * */
+    public static String mapToUrlEncodedParameters(Map<String, String> map) {
+        return map.keySet().stream()
+                .map(key -> key + "=" + URLEncoder.encode(map.get(key), StandardCharsets.UTF_8))
+                .collect(Collectors.joining("&"));
+    }
 }
