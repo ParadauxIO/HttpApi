@@ -98,7 +98,6 @@ public class HttpApi {
     public HttpApi(Logger logger) {
         this.logger = logger;
 
-
         client = HttpClient.newBuilder()
                 .version(DEFAULT_HTTP_VERSION)
                 .followRedirects(DEFAULT_REDIRECT_POLICY)
@@ -111,6 +110,7 @@ public class HttpApi {
     /**
      * Creates a default JSON request from a String URL
      * @param URL the url to send the request to.
+     * @return The HTTP Request.
      * */
     @CheckReturnValue
     @Nullable
@@ -122,7 +122,7 @@ public class HttpApi {
      * Creates a default JSON request from a String URL and any additional, non-default headers.
      * @param URL the url to send the request to.
      * @param additionalHeaders Any additional headers you would like attached.
-     *
+     * @return The HTTP Request.
      * */
     @CheckReturnValue
     @Nullable
@@ -134,6 +134,7 @@ public class HttpApi {
      * Creates a default JSON request from a URI and any additional, non-default headers.
      * @param uri the URI to send the request to
      * @param additionalHeaders Any additional headers you would like attached.
+     * @return The HTTP Request.
      * */
     @CheckReturnValue
     @Nullable
@@ -157,7 +158,8 @@ public class HttpApi {
     
     /**
      * Creates a default plain-text request from a String URL
-     * @parma the URI to send the request to.
+     * @param URL the URI to send the request to.
+     * @return The HTTP Request.
      * */
     @CheckReturnValue
     @Nullable
@@ -169,6 +171,7 @@ public class HttpApi {
      * Creates a default plain-text request from a String URL and any additional, non-default headers.
      * @param URL the URL to send the request to
      * @param additionalHeaders Any additional headers you would like attached.
+     * @return The HTTP Request.
      * */
     @CheckReturnValue
     @Nullable
@@ -180,6 +183,7 @@ public class HttpApi {
      * Creates a default plain-text request from a URI and any additional, non-default headers.
      * @param uri the URI to send the request to
      * @param additionalHeaders Any additional headers you would like attached.
+     * @return The HTTP Request.
      * */
     @CheckReturnValue
     @Nonnull
@@ -204,6 +208,7 @@ public class HttpApi {
     /**
      * Posts to the given URL, returns the response.
      * @param URL the URL to send the request to
+     * @return The HTTP Request.
      * */
     @CheckReturnValue
     @Nullable
@@ -215,6 +220,7 @@ public class HttpApi {
      * Posts to the given URL and any additional, non-default headers, returns the response.
      * @param URL the URL to send the request to
      * @param additionalHeaders Any additional headers you would like attached.
+     * @return The HTTP Request.
      * */
     @CheckReturnValue
     @Nullable
@@ -226,6 +232,7 @@ public class HttpApi {
      * Posts to the given URI and any additional, non-default headers, returns the response.
      * @param uri The URI to send the request to
      * @param additionalHeaders Any additional headers you would like attached.
+     * @return The HTTP Request.
      * */
     @CheckReturnValue
     @Nullable
@@ -251,6 +258,7 @@ public class HttpApi {
      * Posts binary to the given URL, returns the response.
      * @param URL the URL to send the request to
      * @param data A binary array containing the data you wish to POST
+     * @return The HTTP Request.
      * */
     @CheckReturnValue
     @Nullable
@@ -263,6 +271,7 @@ public class HttpApi {
      * @param URL the URL to send the request to
      * @param data A binary array containing the data you wish to POST
      * @param additionalHeaders Any additional headers you would like attached.
+     * @return The HTTP Request.
      * */
     @CheckReturnValue
     @Nullable
@@ -275,6 +284,7 @@ public class HttpApi {
      * @param uri the URL to send the request to
      * @param data A binary array containing the data you wish to POST
      * @param additionalHeaders Any additional headers you would like attached.
+     * @return The HTTP Request.
      * */
     @CheckReturnValue
     @Nullable
@@ -299,6 +309,7 @@ public class HttpApi {
      * Only use this when concurrency is being upheld elsewhere, and is not needed at the httpclient level.
      * @param request The HTTP request you wish to send
      * @param handler The {@link java.net.http.HttpResponse.BodyHandler} pertaining the the response datatype.
+     * @param <T> Type of Response.
      * @return The HTTP response from the webserver.
      * */
     @CheckReturnValue
@@ -316,6 +327,7 @@ public class HttpApi {
      * Sends the specified HTTP request asynchronously. (THIS RETURNS A COMPLETABLE FUTURE!)
      * @param request The HTTP request you wish to send
      * @param handler The {@link java.net.http.HttpResponse.BodyHandler} pertaining the the response datatype.
+     * @param <T> Type of Response.
      * @return A completable future containing the HTTP Response once it has been received.
      * */
     @CheckReturnValue
@@ -332,6 +344,7 @@ public class HttpApi {
 
     /**
      * For idiots who try and execute this jar directly.
+     * @param args Unused.
      * */
     public static void main(String[] args) {
         JOptionPane.showMessageDialog(new JPanel(), "This is an API. You cannot execute this JAR directly.", "Illegal Action",
@@ -339,7 +352,9 @@ public class HttpApi {
     }
 
     /**
-     * Converts a Map<String, String> into a url-encoded form string.
+     * Converts a String, String Map into a url-encoded form string.
+     * @param map A Key:Value pairing for all the encoded parameters you wish to produce.
+     * @return A url-encoded string.
      * */
     public static String mapToUrlEncodedParameters(Map<String, String> map) {
         return map.keySet().stream()
