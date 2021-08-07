@@ -25,12 +25,11 @@
 
 package io.paradaux.http;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URI;
@@ -112,7 +111,6 @@ public class HttpApi {
      * @param URL the url to send the request to.
      * @return The HTTP Request.
      * */
-    @CheckReturnValue
     @Nullable
     public HttpRequest jsonRequest(String URL) {
         return jsonRequest(URI.create(URL), null);
@@ -124,7 +122,6 @@ public class HttpApi {
      * @param additionalHeaders Any additional headers you would like attached.
      * @return The HTTP Request.
      * */
-    @CheckReturnValue
     @Nullable
     public HttpRequest jsonRequest(String URL, String[] additionalHeaders) {
         return jsonRequest(URI.create(URL), additionalHeaders);
@@ -136,7 +133,6 @@ public class HttpApi {
      * @param additionalHeaders Any additional headers you would like attached.
      * @return The HTTP Request.
      * */
-    @CheckReturnValue
     @Nullable
     public HttpRequest jsonRequest(URI uri, String[] additionalHeaders) {
         HttpRequest.Builder builder = HttpRequest.newBuilder()
@@ -161,7 +157,6 @@ public class HttpApi {
      * @param URL the URI to send the request to.
      * @return The HTTP Request.
      * */
-    @CheckReturnValue
     @Nullable
     public HttpRequest plainRequest(String URL) {
         return plainRequest(URI.create(URL), null);
@@ -173,7 +168,6 @@ public class HttpApi {
      * @param additionalHeaders Any additional headers you would like attached.
      * @return The HTTP Request.
      * */
-    @CheckReturnValue
     @Nullable
     public HttpRequest plainRequest(String URL, String[] additionalHeaders) {
         return plainRequest(URI.create(URL), additionalHeaders);
@@ -185,8 +179,7 @@ public class HttpApi {
      * @param additionalHeaders Any additional headers you would like attached.
      * @return The HTTP Request.
      * */
-    @CheckReturnValue
-    @Nonnull
+    @NonNull
     public HttpRequest plainRequest(URI uri, String[] additionalHeaders) {
         HttpRequest.Builder builder = HttpRequest.newBuilder()
                 .uri(uri)
@@ -210,7 +203,6 @@ public class HttpApi {
      * @param URL the URL to send the request to
      * @return The HTTP Request.
      * */
-    @CheckReturnValue
     @Nullable
     public HttpRequest postPlain(String URL) {
         return postPlain(URI.create(URL), null);
@@ -222,7 +214,6 @@ public class HttpApi {
      * @param additionalHeaders Any additional headers you would like attached.
      * @return The HTTP Request.
      * */
-    @CheckReturnValue
     @Nullable
     public HttpRequest postPlain(String URL, String[] additionalHeaders) {
         return postPlain(URI.create(URL), additionalHeaders);
@@ -234,7 +225,6 @@ public class HttpApi {
      * @param additionalHeaders Any additional headers you would like attached.
      * @return The HTTP Request.
      * */
-    @CheckReturnValue
     @Nullable
     public HttpRequest postPlain(URI uri, String[] additionalHeaders) {
         HttpRequest.Builder builder = HttpRequest.newBuilder()
@@ -260,7 +250,6 @@ public class HttpApi {
      * @param data A binary array containing the data you wish to POST
      * @return The HTTP Request.
      * */
-    @CheckReturnValue
     @Nullable
     public HttpRequest postBytes(String URL, byte[] data) {
         return postBytes(URI.create(URL), data, null);
@@ -273,7 +262,6 @@ public class HttpApi {
      * @param additionalHeaders Any additional headers you would like attached.
      * @return The HTTP Request.
      * */
-    @CheckReturnValue
     @Nullable
     public HttpRequest postBytes(String URL, byte[] data, String[] additionalHeaders) {
         return postBytes(URI.create(URL), data, additionalHeaders);
@@ -286,7 +274,6 @@ public class HttpApi {
      * @param additionalHeaders Any additional headers you would like attached.
      * @return The HTTP Request.
      * */
-    @CheckReturnValue
     @Nullable
     public HttpRequest postBytes(URI uri, byte[] data, String[] additionalHeaders) {
         HttpRequest.Builder builder = HttpRequest.newBuilder()
@@ -312,7 +299,6 @@ public class HttpApi {
      * @param <T> Type of Response.
      * @return The HTTP response from the webserver.
      * */
-    @CheckReturnValue
     @Nullable
     public <T> HttpResponse<T> sendSync(HttpRequest request, HttpResponse.BodyHandler<T> handler) {
         try {
@@ -330,7 +316,6 @@ public class HttpApi {
      * @param <T> Type of Response.
      * @return A completable future containing the HTTP Response once it has been received.
      * */
-    @CheckReturnValue
     @Nullable
     public <T> CompletableFuture<HttpResponse<T>> sendAsync(HttpRequest request, HttpResponse.BodyHandler<T> handler) {
         try {
@@ -356,6 +341,7 @@ public class HttpApi {
      * @param map A Key:Value pairing for all the encoded parameters you wish to produce.
      * @return A url-encoded string.
      * */
+    @NonNull
     public static String mapToUrlEncodedParameters(Map<String, String> map) {
         return map.keySet().stream()
                 .map(key -> key + "=" + URLEncoder.encode(map.get(key), StandardCharsets.UTF_8))

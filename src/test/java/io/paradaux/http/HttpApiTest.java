@@ -32,13 +32,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HttpApiTest {
 
@@ -113,7 +111,7 @@ class HttpApiTest {
         map.put("from", "");
         map.put("to", "");
         map.put("template", "verificationemail");
-        map.put("X-Mailgun-Variables", "{\"discord_tag\":\"test_discord_tag\", \"verification_code\": \"test_verfication_code\"}");
+        map.put("h:X-Mailgun-Variables", "{\"discord_tag\":\"test_discord_tag\", \"verification_code\": \"test_verfication_code\"}");
 
         String[] headers = {"Authorization", "Basic XXXXXXXXXXXXXXXXX"};
         String encodedMap = HttpApi.mapToUrlEncodedParameters(map);
